@@ -246,7 +246,7 @@ void Table::insert(string file, vector<string> val, vector<string> temp[], vecto
 		}
 		con.push_back(add);
 		int t = 0;
-		for (int t = 0; t < temp[1].size(); t++)
+		for (t = 0; t < temp[1].size(); t++)
 			if (temp[1][t] == file)
 				break;
 		temp[3][t] = to_string(stoi(temp[3][t]) + 1);

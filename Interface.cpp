@@ -191,7 +191,7 @@ bool Interface::parse(string command, Table &g, User &u)
 				//cout << endl;
 				name_to_file[0].push_back(name);
 				name_to_file[1].push_back(file);
-				name_to_file[2].push_back(to_string(col.size() - 1));
+				name_to_file[2].push_back(to_string(col.size()));
 				name_to_file[3].push_back(to_string(0));
 				g.create_to_file(file, col);
 				Authority h("user" + to_string(u.user_num()));
@@ -805,7 +805,7 @@ void Interface::UI()
 			cout << "(mysql)==> ";
 			string command;
 			getline(cin, command);
-			now_time == time(NULL);
+			now_time = time(NULL);
 			if (command == "quit")
 			{
 				out_sys_log();
@@ -1014,7 +1014,8 @@ void Interface::sys_info(int owner)
 					p = 2;
 				else if (sys_log[i][2] == "SELECT")
 					p = 3;
-				vector<int> q(p);
+				vector<int> q;
+				q.push_back(p);
 				vector<string> s;
 				s.push_back(sys_log[i][1]);
 				Authority r;
