@@ -34,30 +34,30 @@ void Interface::cat(string a)
 }
 
 //01234567890123456789
-//CREATE TABLE name (column1, column2, ¡¤¡¤¡¤, columnT) TO file
+//CREATE TABLE name (column1, column2, Â·Â·Â·, columnT) TO file
 //CREATE TABLE name FROM filename
 //DROP TABLE name
 //TABLE LIST
-//INSERT INTO name VALUES (value1, value2, ¡¤¡¤¡¤, valueT)
-//INSERT INTO name (column1, column2, ¡¤¡¤¡¤) VALUES (value1, value2, ¡¤¡¤¡¤)
+//INSERT INTO name VALUES (value1, value2, Â·Â·Â·, valueT)
+//INSERT INTO name (column1, column2, Â·Â·Â·) VALUES (value1, value2, Â·Â·Â·)
 //DELETE FROM name WHERE column = value
 //DELETE * FROM name
 
-//SELECT column1, column2, ¡¤¡¤¡¤ FROM name
+//SELECT column1, column2, Â·Â·Â· FROM name
 //SELECT * FROM name
 
-//SELECT DISTINCT column1, column2, ¡¤¡¤¡¤ FROM name
+//SELECT DISTINCT column1, column2, Â·Â·Â· FROM name
 
-//SELECT * FROM name ORDER BY column1, column2, ¡¤¡¤¡¤ ASC|DESC
+//SELECT * FROM name ORDER BY column1, column2, Â·Â·Â· ASC|DESC
 
-//SELECT column1, column2, ¡¤¡¤¡¤ FROM name WHERE column = value
+//SELECT column1, column2, Â·Â·Â· FROM name WHERE column = value
 //SELECT * FROM name WHERE column = value
 
-//SELECT column1, column2, ¡¤¡¤¡¤ FROM name TO file
+//SELECT column1, column2, Â·Â·Â· FROM name TO file
 //SELECT * FROM name TO file
 
-//GRANT <È¨ÏŞÁĞ±í> on <±íÃû> to <ÓÃ»§ÁĞ±í>
-//REVOKE <È¨ÏŞÁĞ±í> on <±íÃû> from <ÓÃ»§ÁĞ±í>
+//GRANT <æƒé™åˆ—è¡¨> on <è¡¨å> to <ç”¨æˆ·åˆ—è¡¨>
+//REVOKE <æƒé™åˆ—è¡¨> on <è¡¨å> from <ç”¨æˆ·åˆ—è¡¨>
 
 bool Interface::parse(string command, Table &g, User &u)
 {
@@ -91,14 +91,14 @@ bool Interface::parse(string command, Table &g, User &u)
 	}
 	if (left_bracket != right_bracket)
 		return false;
-	//´´½¨
+	//åˆ›å»º
 	if (command.find("CREATE TABLE ") == 0)
 	{
 		int p = command.find(" (", 13);
 		int q = command.find(" FROM ", 13);
 		if (p == -1 && q == -1)
 			return false;
-		//´ÓÎÄ¼ş
+		//ä»æ–‡ä»¶
 		else if (p == -1)
 		{
 			for (int i = 13; i < q; i++)
@@ -147,7 +147,7 @@ bool Interface::parse(string command, Table &g, User &u)
 				return true;
 			}
 		}
-		//µ½ÎÄ¼ş
+		//åˆ°æ–‡ä»¶
 		else
 		{
 			int r = command.rfind(") TO ", n - 1);
@@ -163,7 +163,7 @@ bool Interface::parse(string command, Table &g, User &u)
 						return false;
 				vector<string> col;
 				int T = 0;
-				//½«column¶ÁÈëvector
+				//å°†columnè¯»å…¥vector
 				to_vector(col, command, p + 2, r - 1);
 				string name = command.substr(13, p - 13);
 				string file = command.substr(r + 5, n - r - 5);
@@ -200,7 +200,7 @@ bool Interface::parse(string command, Table &g, User &u)
 			}
 		}
 	}
-	//É¾³ı±í¼°ÎÄ¼ş
+	//åˆ é™¤è¡¨åŠæ–‡ä»¶
 	else if (command.find("DROP TABLE ") == 0)
 	{
 		for (int i = 11; i < n; i++)
@@ -222,8 +222,8 @@ bool Interface::parse(string command, Table &g, User &u)
 		}
 		else
 		{
-			//É¾³ı±í¸ñ
-			//¼ì²éÈ¨ÏŞ
+			//åˆ é™¤è¡¨æ ¼
+			//æ£€æŸ¥æƒé™
 			Authority h;
 			bool s = h.auth_check(u.user_num(), name, 0);
 			if (s == true)
@@ -236,16 +236,16 @@ bool Interface::parse(string command, Table &g, User &u)
 			else
 			{
 				cout << "Permission denied!\n";
-				//±¨¸æÈ¨ÏŞ
+				//æŠ¥å‘Šæƒé™
 				string owner = h.out_owner();
 				to_log(owner, u.user_num(), name, now_time, "DROP");
 			}
 		}
 	}
-	//Õ¹Ê¾µ±Ç°ÓÃ»§ËùÄÜ·ÃÎÊµÄ±í¼¯ºÏ
+	//å±•ç¤ºå½“å‰ç”¨æˆ·æ‰€èƒ½è®¿é—®çš„è¡¨é›†åˆ
 	else if (command == "TABLE LIST")
 		table_list(u);
-	//²åÈëĞÅÏ¢
+	//æ’å…¥ä¿¡æ¯
 	else if (command.find("INSERT INTO ") == 0)
 	{
 		int p = command.find(" VALUES ", 12);
@@ -262,7 +262,7 @@ bool Interface::parse(string command, Table &g, User &u)
 						return false;
 				string name = command.substr(12, p - 12);
 				string file;
-				//¼ì²éÊÇ·ñ´æÔÚ
+				//æ£€æŸ¥æ˜¯å¦å­˜åœ¨
 				int count = 0;
 				for (int i = 0; i < name_to_file[0].size(); i++)
 					if (name == name_to_file[0][i])
@@ -296,13 +296,13 @@ bool Interface::parse(string command, Table &g, User &u)
 					//for (int i = 0; i < val.size(); i++)
 						//cout << val[i] << ' ';
 					//cout << endl;
-					//²åÈëÊı¾İ
+					//æ’å…¥æ•°æ®
 					g.insert(file, val, name_to_file);
 				}
 				else
 				{
 					cout << "Permission denied!\n";
-					//±¨¸æÈ¨ÏŞ
+					//æŠ¥å‘Šæƒé™
 					string owner = h.out_owner();
 					to_log(owner, u.user_num(), name, now_time, "INSERT");
 				}
@@ -348,13 +348,13 @@ bool Interface::parse(string command, Table &g, User &u)
 						//cout << name << endl;
 						//for (int i = 0; i < col.size(); i++)
 							//cout << col[i] << ' ' << val[i] << endl;
-						//²åÈëÊı¾İ
+						//æ’å…¥æ•°æ®
 						g.insert(file, val, name_to_file, col);
 					}
 					else
 					{
 						cout << "Permission denied!\n";
-						//±¨¸æÈ¨ÏŞ
+						//æŠ¥å‘Šæƒé™
 						string owner = h.out_owner();
 						to_log(owner, u.user_num(), name, now_time, "INSERT");
 					}
@@ -362,7 +362,7 @@ bool Interface::parse(string command, Table &g, User &u)
 			}
 		}
 	}
-	//É¾³ı²¿·Ö
+	//åˆ é™¤éƒ¨åˆ†
 	else if (command.find("DELETE FROM ") == 0)
 	{
 		int p = command.find(" WHERE ");
@@ -375,7 +375,7 @@ bool Interface::parse(string command, Table &g, User &u)
 			string col = command.substr(p + 7, q - p - 7);
 			string val = command.substr(q + 3, n - q - 3);
 			string file;
-			//²éÕÒÊÇ·ñ´æÔÚ
+			//æŸ¥æ‰¾æ˜¯å¦å­˜åœ¨
 			int count = 0;
 			for (int i = 0; i < name_to_file[0].size(); i++)
 				if (name == name_to_file[0][i])
@@ -389,7 +389,7 @@ bool Interface::parse(string command, Table &g, User &u)
 				return false;
 			}
 			//cout << name << " " << col << ' ' << val << endl;
-			//É¾³ı²¿·ÖĞĞ
+			//åˆ é™¤éƒ¨åˆ†è¡Œ
 			Authority h;
 			bool s = h.auth_check(u.user_num(), name, 2);
 			if (s == true)
@@ -397,18 +397,18 @@ bool Interface::parse(string command, Table &g, User &u)
 			else
 			{
 				cout << "Permission denied!\n";
-				//±¨¸æÈ¨ÏŞ
+				//æŠ¥å‘Šæƒé™
 				string owner = h.out_owner();
 				to_log(owner, u.user_num(), name, now_time, "DELETE");
 			}
 		}
 	}
-	//É¾³ıÈ«²¿
+	//åˆ é™¤å…¨éƒ¨
 	else if (command.find("DELETE * FROM ") == 0)
 	{
 		string name = command.substr(14, n - 14);
 		string file;
-		//²éÕÒÊÇ·ñ´æÔÚ
+		//æŸ¥æ‰¾æ˜¯å¦å­˜åœ¨
 		int count = 0;
 		for (int i = 0; i < name_to_file[0].size(); i++)
 			if (name == name_to_file[0][i])
@@ -428,12 +428,12 @@ bool Interface::parse(string command, Table &g, User &u)
 		else
 		{
 			cout << "Permission denied!\n";
-			//±¨¸æÈ¨ÏŞ
+			//æŠ¥å‘Šæƒé™
 			string owner = h.out_owner();
 			to_log(owner, u.user_num(), name, now_time, "DELETE");
 		}
 	}
-	//Ñ¡Ôñ
+	//é€‰æ‹©
 	else if (command.find("SELECT ") == 0)
 	{
 		int p = command.find(" FROM ", 8);
@@ -453,8 +453,8 @@ bool Interface::parse(string command, Table &g, User &u)
 			if (q == -1)
 			{
 				string name = command.substr(p + 6, n - p - 6);
-				//¼ì²éÊÇ·ñ´æÔÚ
-				//Êµ¼Êº¯Êı
+				//æ£€æŸ¥æ˜¯å¦å­˜åœ¨
+				//å®é™…å‡½æ•°
 				string file;
 				int t;
 				for (t = 0; t < name_to_file[0].size(); t++)
@@ -469,7 +469,7 @@ bool Interface::parse(string command, Table &g, User &u)
 					return false;
 				}
 				Authority h;
-				bool s = h.auth_check(u.user_num(), name, 1);
+				bool s = h.auth_check(u.user_num(), name, 3);
 				if (s == true)
 				{
 					if (q == -1)
@@ -481,7 +481,7 @@ bool Interface::parse(string command, Table &g, User &u)
 				else
 				{
 					cout << "Permission denied!\n";
-					//±¨¸æÈ¨ÏŞ
+					//æŠ¥å‘Šæƒé™
 					string owner = h.out_owner();
 					to_log(owner, u.user_num(), name, now_time, "SELECT");
 				}
@@ -489,8 +489,8 @@ bool Interface::parse(string command, Table &g, User &u)
 			else if (q != -1 && q < p)
 			{
 				string name = command.substr(p + 6, n - p - 6);
-				//¼ì²éÊÇ·ñ´æÔÚ
-				//Êµ¼Êº¯Êı
+				//æ£€æŸ¥æ˜¯å¦å­˜åœ¨
+				//å®é™…å‡½æ•°
 				string file;
 				int t;
 				for (t = 0; t < name_to_file[0].size(); t++)
@@ -505,7 +505,7 @@ bool Interface::parse(string command, Table &g, User &u)
 					return false;
 				}
 				Authority h;
-				bool s = h.auth_check(u.user_num(), name, 1);
+				bool s = h.auth_check(u.user_num(), name, 3);
 				if (s == true)
 				{
 					g.select(file, col, true);
@@ -514,7 +514,7 @@ bool Interface::parse(string command, Table &g, User &u)
 				else
 				{
 					cout << "Permission denied!\n";
-					//±¨¸æÈ¨ÏŞ
+					//æŠ¥å‘Šæƒé™
 					string owner = h.out_owner();
 					to_log(owner, u.user_num(), name, now_time, "SELECT");
 				}
@@ -527,8 +527,8 @@ bool Interface::parse(string command, Table &g, User &u)
 				{
 					string or_col;
 					or_col = command.substr(r + 10, n - r - 14);
-					//¼ì²éÊÇ·ñ´æÔÚ
-					//Êµ¼Êº¯Êı
+					//æ£€æŸ¥æ˜¯å¦å­˜åœ¨
+					//å®é™…å‡½æ•°
 					string file;
 					int t;
 					for (t = 0; t < name_to_file[0].size(); t++)
@@ -543,13 +543,13 @@ bool Interface::parse(string command, Table &g, User &u)
 						return false;
 					}
 					Authority h;
-					bool s = h.auth_check(u.user_num(), name, 1);
+					bool s = h.auth_check(u.user_num(), name, 3);
 					if (s == true)
 						g.select(file, col, false, 1, false, false, or_col);
 					else
 					{
 						cout << "Permission denied!\n";
-						//±¨¸æÈ¨ÏŞ
+						//æŠ¥å‘Šæƒé™
 						string owner = h.out_owner();
 						to_log(owner, u.user_num(), name, now_time, "SELECT");
 					}
@@ -558,8 +558,8 @@ bool Interface::parse(string command, Table &g, User &u)
 				{
 					string or_col;
 					or_col = command.substr(r + 10, n - r - 15);
-					//¼ì²éÊÇ·ñ´æÔÚ
-					//Êµ¼Êº¯Êı
+					//æ£€æŸ¥æ˜¯å¦å­˜åœ¨
+					//å®é™…å‡½æ•°
 					string file;
 					int t;
 					for (t = 0; t < name_to_file[0].size(); t++)
@@ -574,13 +574,13 @@ bool Interface::parse(string command, Table &g, User &u)
 						return false;
 					}
 					Authority h;
-					bool s = h.auth_check(u.user_num(), name, 1);
+					bool s = h.auth_check(u.user_num(), name, 3);
 					if (s == true)
 						g.select(file, col, false, 2, false, false, or_col);
 					else
 					{
 						cout << "Permission denied!\n";
-						//±¨¸æÈ¨ÏŞ
+						//æŠ¥å‘Šæƒé™
 						string owner = h.out_owner();
 						to_log(owner, u.user_num(), name, now_time, "SELECT");
 					}
@@ -598,8 +598,8 @@ bool Interface::parse(string command, Table &g, User &u)
 					string name = command.substr(p + 6, s - p - 6);
 					string column = command.substr(s + 7, uw - s - 7);
 					string val = command.substr(uw + 3, n - uw - 3);
-					//¼ì²éÊÇ·ñ´æÔÚ
-					//Êµ¼Êº¯Êı
+					//æ£€æŸ¥æ˜¯å¦å­˜åœ¨
+					//å®é™…å‡½æ•°
 					string file;
 					int t;
 					for (t = 0; t < name_to_file[0].size(); t++)
@@ -614,13 +614,13 @@ bool Interface::parse(string command, Table &g, User &u)
 						return false;
 					}
 					Authority h;
-					bool s = h.auth_check(u.user_num(), name, 1);
+					bool s = h.auth_check(u.user_num(), name, 3);
 					if (s == true)
 						g.select(file, col, false, 0, true, false, {}, column, val);
 					else
 					{
 						cout << "Permission denied!\n";
-						//±¨¸æÈ¨ÏŞ
+						//æŠ¥å‘Šæƒé™
 						string owner = h.out_owner();
 						to_log(owner, u.user_num(), name, now_time, "SELECT");
 					}
@@ -630,8 +630,8 @@ bool Interface::parse(string command, Table &g, User &u)
 			{
 				string name = command.substr(p + 6, t - p - 6);
 				string to_file_name = command.substr(t + 4, n - t - 4);
-				//¼ì²éÊÇ·ñ´æÔÚ
-				//Êµ¼Êº¯Êı
+				//æ£€æŸ¥æ˜¯å¦å­˜åœ¨
+				//å®é™…å‡½æ•°
 				string file;
 				int t;
 				for (t = 0; t < name_to_file[0].size(); t++)
@@ -646,13 +646,13 @@ bool Interface::parse(string command, Table &g, User &u)
 					return false;
 				}
 				Authority h;
-				bool s = h.auth_check(u.user_num(), name, 1);
+				bool s = h.auth_check(u.user_num(), name, 3);
 				if (s == true)
 					g.select(file, col, false, 0, false, true, {}, {}, {}, to_file_name);
 				else
 				{
 					cout << "Permission denied!\n";
-					//±¨¸æÈ¨ÏŞ
+					//æŠ¥å‘Šæƒé™
 					string owner = h.out_owner();
 					to_log(owner, u.user_num(), name, now_time, "SELECT");
 				}
@@ -663,7 +663,7 @@ bool Interface::parse(string command, Table &g, User &u)
 		else
 			return false;
 	}
-	//ÊÚÈ¨
+	//æˆæƒ
 	else if (command.find("GRANT ") == 0)
 	{
 		int p = command.find(" on ");
@@ -678,8 +678,8 @@ bool Interface::parse(string command, Table &g, User &u)
 			to_vector(auth, command, 6, p - 1);
 			name = command.substr(p + 4, q - p - 4);
 			to_vector(user, command, q + 4, n - 1);
-			//¼ì²éÈ¨ÏŞ
-			//ÊÚÈ¨
+			//æ£€æŸ¥æƒé™
+			//æˆæƒ
 			Authority h;
 			vector<int> auth_num;
 			for (int i = 0; i < auth.size(); i++)
@@ -708,7 +708,7 @@ bool Interface::parse(string command, Table &g, User &u)
 			h.grant(name, u.user_num(), auth_num, user);
 		}
 	}
-	//È¡ÏûÊÚÈ¨
+	//å–æ¶ˆæˆæƒ
 	else if (command.find("REVOKE ") == 0)
 	{
 		int p = command.find(" on ");
@@ -723,8 +723,8 @@ bool Interface::parse(string command, Table &g, User &u)
 			to_vector(auth, command, 7, p - 1);
 			name = command.substr(p + 4, q - p - 4);
 			to_vector(user, command, q + 6, n - 1);
-			//¼ì²éÈ¨ÏŞ
-			//È¡ÏûÊÚÈ¨
+			//æ£€æŸ¥æƒé™
+			//å–æ¶ˆæˆæƒ
 			Authority h;
 			vector<int> auth_num;
 			if (auth[0] == "all")
@@ -785,7 +785,7 @@ void Interface::UI()
 		bool flag = false;
 		while (a == "mySQL")
 		{
-			//µÇÂ¼
+			//ç™»å½•
 			while (!flag)
 			{
 				cout << "(mysql)==> login: ";
@@ -870,7 +870,7 @@ void Interface::table_list(User& u)
 		for (int t = 1; t < information.size() - 1; t++)
 			cout << information[t] << ", ";
 		cout << information[information.size() - 1] << "] ";
-		//´òÓ¡È¨ÏŞ
+		//æ‰“å°æƒé™
 		Authority h;
 		h.display_auth(u.user_num(), name_to_file[0][m]);
 		cout << endl;
