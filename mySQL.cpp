@@ -558,7 +558,7 @@ bool Interface::parse(string command, Table &g, User &u)
 			else
 				j = 7;
 			to_vector(col, command, j, p - 1);
-			if (q == -1)
+			if (q == -1 && r == -1 && s == -1 && t == -1)
 			{
 				string name = command.substr(p + 6, n - p - 6);
 				//检查是否存在
